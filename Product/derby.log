@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Thu Jul 04 15:31:24 JST 2019:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-016b-bbae-32d0-000007129200 
+on database directory E:\103_java\IH\JavafxGame\JavafxGame\Product\stagedb with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@7e6cbb7a 
+Loaded from file:/C:/Program%20Files%20(x86)/Java/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=12.0.1+12
+user.dir=E:\103_java\IH\JavafxGame\JavafxGame\Product
+os.name=Windows 10
+os.arch=amd64
+os.version=10.0
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''

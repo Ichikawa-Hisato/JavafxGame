@@ -22,8 +22,14 @@ public class Sample3 extends Application{
     private int pos_x = 1;
     private int pos_y = 0;
 
-    private ArrayList<Integer> mapdata;
-    private int map_data[][];
+    private ArrayList mapdata;
+    private int map_data[][] = new int[15][20];
+
+    //鍵の有無
+    private int key_value = 0;
+
+    //場面番号
+    private int stage_number = 1;
 
     public static void main(String[] args) {
         launch(args);
@@ -40,13 +46,14 @@ public class Sample3 extends Application{
         im_hero = new Image(getClass().getResourceAsStream("img/chap-mapman.png"));
 
         //Beanの作成
-        StageDataBean sdb = new StageDataBean();
+        StageOneDataBean sdb = new StageOneDataBean();
         mapdata = sdb.getData();
 
+        //DBからデータを取得
         for(int row=0; row<mapdata.size(); row++){
             ArrayList rowdata = (ArrayList) (mapdata.get(row));
             for(int column=0; column<rowdata.size(); column++){
-                map_data[row][column] = rowdata.get(column);
+                map_data[row][column] = Integer.parseInt(rowdata.get(column).toString());
             }
         }
 
@@ -113,64 +120,199 @@ public class Sample3 extends Application{
 
             switch (k) {
             case UP:
+                //画面範囲チェック
                 if(pos_y <= 0){
                     lb.setText("これ以上は上に行けません。");
                     break;
                 }
 
-                if(map_data[pos_y - 1][pos_x] != 1){
+                //マップデータの確認
+                if(ChkMapData(pos_x,pos_y - 1) == 1){
+                    break;
+                }
+
+                if(map_data[pos_y][pos_x] == 3){
+                    if(key_value != 1){
+                        map_data[pos_y][pos_x] = 3;
+                        lb1[pos_x][pos_y].setGraphic(new ImageView(im3));
+                    }else{
+                        map_data[pos_y][pos_x] = 0;
+                        lb1[pos_x][pos_y].setGraphic(new ImageView(im0));                                
+                    }
+                }else{
                     map_data[pos_y][pos_x] = 0;
                     lb1[pos_x][pos_y].setGraphic(new ImageView(im0));
-                    pos_y = pos_y - 1;
-                    lb1[pos_x][pos_y].setGraphic(new ImageView(im_hero));
                 }
+
+                pos_y = pos_y - 1;
+                lb1[pos_x][pos_y].setGraphic(new ImageView(im_hero));
                 break;
             case DOWN:
+                // 画面範囲チェック
                 if (pos_y >= 14) {
                     lb.setText("これ以上は下に行けません。");
                     break;
                 }
 
-                if(map_data[pos_y + 1][pos_x] != 1){
+                // マップデータの確認
+                if(ChkMapData(pos_x,pos_y + 1) == 1){
+                    break;
+                }
+
+                if (map_data[pos_y][pos_x] == 3) {
+                    if (key_value != 1) {
+                        map_data[pos_y][pos_x] = 3;
+                        lb1[pos_x][pos_y].setGraphic(new ImageView(im3));
+                    } else {
+                        map_data[pos_y][pos_x] = 0;
+                        lb1[pos_x][pos_y].setGraphic(new ImageView(im0));
+                    }
+                } else {
                     map_data[pos_y][pos_x] = 0;
                     lb1[pos_x][pos_y].setGraphic(new ImageView(im0));
-                    pos_y = pos_y + 1;
-                    lb1[pos_x][pos_y].setGraphic(new ImageView(im_hero));
                 }
+
+                pos_y = pos_y + 1;
+                lb1[pos_x][pos_y].setGraphic(new ImageView(im_hero));
                 break;
             case LEFT:
+                // 画面範囲チェック
                 if (pos_x <= 0) {
                     lb.setText("これ以上は左に行けません。");
                     break;
                 }
 
-                if(map_data[pos_y][pos_x - 1] != 1){
+                // マップデータの確認
+                if(ChkMapData(pos_x - 1,pos_y) == 1){
+                    break;
+                }
+
+                if (map_data[pos_y][pos_x] == 3) {
+                    if (key_value != 1) {
+                        map_data[pos_y][pos_x] = 3;
+                        lb1[pos_x][pos_y].setGraphic(new ImageView(im3));
+                    } else {
+                        map_data[pos_y][pos_x] = 0;
+                        lb1[pos_x][pos_y].setGraphic(new ImageView(im0));
+                    }
+                } else {
                     map_data[pos_y][pos_x] = 0;
                     lb1[pos_x][pos_y].setGraphic(new ImageView(im0));
-                    pos_x = pos_x - 1;
-                    lb1[pos_x][pos_y].setGraphic(new ImageView(im_hero));
                 }
+
+                pos_x = pos_x - 1;
+                lb1[pos_x][pos_y].setGraphic(new ImageView(im_hero));
                 break;
             case RIGHT:
+                // 画面範囲チェック
                 if (pos_x >= 19) {
                     lb.setText("これ以上は右に行けません。");
                     break;
                 }
 
-                if(map_data[pos_y][pos_x + 1] != 1){
+                // マップデータの確認
+                if(ChkMapData(pos_x + 1,pos_y) == 1){
+                    break;
+                }
+
+                if (map_data[pos_y][pos_x] == 3) {
+                    if(key_value != 1) {
+                        map_data[pos_y][pos_x] = 3;
+                        lb1[pos_x][pos_y].setGraphic(new ImageView(im3));
+                    }else {
+                        map_data[pos_y][pos_x] = 0;
+                        lb1[pos_x][pos_y].setGraphic(new ImageView(im0));
+                    }
+                }else {
                     map_data[pos_y][pos_x] = 0;
                     lb1[pos_x][pos_y].setGraphic(new ImageView(im0));
-                    pos_x = pos_x + 1;
-                    lb1[pos_x][pos_y].setGraphic(new ImageView(im_hero));
                 }
+
+                pos_x = pos_x + 1;
+                lb1[pos_x][pos_y].setGraphic(new ImageView(im_hero));
                 break;
+            case ESCAPE:
+                System.exit(1);
             default:
                 lb.setText("方向キーを入力してください。");
             }
 
-            System.out.println(k.toString());
-            System.out.println(pos_x);
-            System.out.println(pos_y);
+            System.out.print(k.toString() + " ");
+            System.out.print(pos_x + " ");
+            System.out.print(pos_y + " ");
+            System.out.println(key_value);
+        }
+    }
+
+    //マップデータの値の判定
+    public int ChkMapData(int x, int y){
+        int return_code = 0;
+        if (map_data[y][x] == 1) {
+            return_code = 1;
+        } else if (map_data[y][x] == 2) {
+            key_value = 1;
+        } else if (map_data[y][x] == 3) {
+            if (key_value == 1) {
+                lb.setText("ゴール！！");
+
+                //新しいマップを表示する
+                getNewMap();
+            } else {
+                lb.setText("鍵がありません");
+            }
+        }
+        return return_code;
+    }
+
+    //新しいマップの作成
+    public void getNewMap(){
+        System.out.println("新しいマップを生成");
+
+        if(stage_number == 1){
+            // 開始位置の変更
+            pos_x = 1;
+            pos_y = 0;
+
+            // Beanの作成
+            StageTwoDataBean stdb = new StageTwoDataBean();
+            mapdata = stdb.getData();
+            stage_number++;
+        }else if(stage_number == 2){
+            // 開始位置の変更
+            pos_x = 0;
+            pos_y = 8;
+
+            // Beanの作成
+            StageTwoDataBean stdb = new StageTwoDataBean();
+            mapdata = stdb.getData();
+            stage_number++;
+        }
+
+        // DBからデータを取得
+        for (int row = 0; row < mapdata.size(); row++) {
+            ArrayList rowdata = (ArrayList) (mapdata.get(row));
+            for (int column = 0; column < rowdata.size(); column++) {
+                map_data[row][column] = Integer.parseInt(rowdata.get(column).toString());
+            }
+        }
+
+        // マップの作成
+        for (int i = 0; i < lb1.length; i++) {
+            for (int j = 0; j < lb1[i].length; j++) {
+                if (map_data[j][i] == 0) {
+                    lb1[i][j].setGraphic(new ImageView(im0));
+                } else if (map_data[j][i] == 1) {
+                    lb1[i][j].setGraphic(new ImageView(im1));
+                } else if (map_data[j][i] == 2) {
+                    lb1[i][j].setGraphic(new ImageView(im2));
+                } else if (map_data[j][i] == 3) {
+                    lb1[i][j].setGraphic(new ImageView(im3));
+                } else if (map_data[j][i] == 8) {
+                    lb1[i][j].setGraphic(new ImageView(im_mons));
+                } else if (map_data[j][i] == 9) {
+                    lb1[i][j].setGraphic(new ImageView(im_hero));
+                }
+            }
         }
     }
 }

@@ -3,11 +3,11 @@ import java.util.*;
 import java.io.*;
 import java.sql.*;
 
-public class StageDataBean implements Serializable{
+public class StageOneDataBean implements Serializable{
     private ArrayList<String> colname;
     private ArrayList<ArrayList> data;
 
-    public StageDataBean()
+    public StageOneDataBean()
     {
         try{
             //接続の準備
@@ -25,9 +25,6 @@ public class StageDataBean implements Serializable{
             Statement st = cn.createStatement();
 
             String qry1 = "CREATE TABLE ステージ1(data1 int, data2 int, data3 int, data4 int, data5 int, data6 int, data7 int, data8 int, data9 int, data10 int, data11 int, data12 int, data13 int, data14 int, data15 int, data16 int, data17 int, data18 int, data19 int, data20 int)";
-                                                  //data6 int, data7 int, data8 int, data9 int, data10 int,
-                                                  //data11 int, data12 int, data13 int, data14 int, data15 int,
-                                                  //data16 int, data17 int, data18 int, data19 int, data20 int)";
             String[] qry2 = {"INSERT INTO ステージ1 VALUES(1, 9, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)",
                              "INSERT INTO ステージ1 VALUES(1, 0, 0, 1, 1, 8, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1)",
                              "INSERT INTO ステージ1 VALUES(1, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1)",
@@ -69,9 +66,9 @@ public class StageDataBean implements Serializable{
             //行の取得
             data = new ArrayList<ArrayList>(); 
             while(rs.next()){
-                ArrayList<String> rowdata = new ArrayList<String>();
+                ArrayList<Integer> rowdata = new ArrayList<Integer>();
                 for(int i=1; i<=cnum; i++){
-                    rowdata.add(rs.getObject(i).toString());
+                    rowdata.add((Integer) (rs.getObject(i)));
                 }
                 data.add(rowdata);
             }
